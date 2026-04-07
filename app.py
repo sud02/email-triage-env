@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from typing import Any, Dict, Optional
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Body, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -78,10 +78,11 @@ def list_tasks():
 
 
 @app.post("/reset")
-def reset(req: ResetRequest):
+def reset(req: Optional[ResetRequest] = Body(None)):
     """Reset environment and return initial observation."""
     try:
-        env = _get_env(req.task_id)
+        task_id = req.task_id if req else "task_classify"
+        env = _get_env(task_id)
         obs = env.reset()
         return obs.model_dump()
     except ValueError as e:
