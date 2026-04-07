@@ -1,0 +1,42 @@
+name: email-triage-env
+version: "1.0.0"
+description: >
+  A realistic email triage and response environment where an AI agent
+  classifies, prioritizes, routes, and drafts replies for a simulated
+  corporate inbox. Models a task humans perform every day.
+author: openenv-submission
+tags:
+  - openenv
+  - email
+  - triage
+  - nlp
+  - productivity
+observation_space:
+  type: object
+  description: >
+    Current inbox snapshot including unread emails with metadata,
+    agent action history, and current task context.
+action_space:
+  type: object
+  description: >
+    Agent actions: classify(email_id, category), prioritize(email_id, level),
+    route(email_id, department), draft_reply(email_id, body),
+    archive(email_id), escalate(email_id, reason), done()
+tasks:
+  - id: task_classify
+    name: Classify Inbox Emails
+    difficulty: easy
+    description: Correctly classify all emails into predefined categories
+  - id: task_prioritize_route
+    name: Prioritize and Route Emails
+    difficulty: medium
+    description: Assign priority levels and route emails to correct departments
+  - id: task_draft_reply
+    name: Draft Professional Replies
+    difficulty: hard
+    description: >
+      Compose appropriate, context-aware replies for emails requiring
+      a response, matching tone, completeness, and policy compliance
+reward_range: [0.0, 1.0]
+max_steps: 50
+api_version: "1.0"
